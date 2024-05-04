@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "577422934559",
+    "project_id": "muniafu-hotel",
+    "storage_bucket": "muniafu-hotel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:577422934559:android:9815f4131f61a5ced00b2a",
+        "android_client_info": {
+          "package_name": "com.example.muniafu_hotel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfEp1GT_076YdDQe_bdnZ3KPu-bUDuFO8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
