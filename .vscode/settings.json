@@ -1,0 +1,21 @@
+{
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#481658",
+        "titleBar.activeBackground": "#641F7B",
+        "titleBar.activeForeground": "#FDFAFE"
+    },
+    "cSpell.words": [
+        "appspot",
+        "authprovider",
+        "authservices",
+        "Cupertino",
+        "firebaseapp",
+        "firestore",
+        "firstname",
+        "lastname",
+        "muniafu",
+        "Oumw",
+        "Signup",
+        "usermodel"
+    ]
+}
