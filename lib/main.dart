@@ -1,29 +1,28 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
-
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import 'package:muniafu_hotel/presentation/authentication/screens/signup.dart';
-import 'package:muniafu_hotel/presentation/home/home_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:muniafu_hotel/presentation/home/home.dart';
 import 'package:muniafu_hotel/presentation/home/widgets/bottom_nav.dart';
-import 'package:muniafu_hotel/presentation/onboarding/onboarding_screen.dart';
-import 'package:muniafu_hotel/providers/auth_provider.dart';
-import 'package:muniafu_hotel/providers/navigation_provider.dart';
-
+import 'package:muniafu_hotel/presentation/onboarding/onboarding.dart';
+import 'package:muniafu_hotel/providers/booking.dart';
+import 'package:muniafu_hotel/providers/hotel.dart';
+import 'package:muniafu_hotel/providers/navigation.dart';
+import 'core/theme/theme.dart';
 import 'firebase_options.dart';
+import 'package:provider/provider.dart';
+import 'package:muniafu_hotel/providers/auth.dart';
 import 'presentation/authentication/screens/admin.dart';
 import 'presentation/authentication/screens/login.dart';
-import 'presentation/home/add_hotels_screen.dart';
-import 'presentation/home/profile_screen.dart';
-import 'providers/admin_provider.dart';
+import 'presentation/dashboard/add_hotels.dart';
+import 'presentation/dashboard/widgets/bottom_nav.dart';
+import 'presentation/home/profile.dart';
+import 'providers/admin.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
   runApp(
     MultiProvider(
       providers: [
@@ -33,6 +32,8 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (context) => AdminProvider(),
         ),
+        ChangeNotifierProvider(create: (context) => HotelProvider()),
+        ChangeNotifierProvider(create: (context) => BookingProvider()),
       ],
       child: const Hotel(),
     ),
@@ -48,22 +49,19 @@ class Hotel extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Muniafu Hotel',
+      title: 'Hotel Card',
       theme: AppTheme.theme,
       home: authProvider.isLoggedIn ? BottomBar() : const SignUpScreen(),
       routes: {
         '/onboarding': (context) => const OnboardingScreen(),
-        '/home': (context) => const MyHomePage(title: 'Hotel Page'),
+        '/home': (context) => MyHomePage(title: 'Hotel Page'),
         '/signUp': (context) => const SignUpScreen(),
         '/profile': (context) => const ProfileScreen(),
         '/login': (context) => const LoginScreen(),
         '/admin': (context) => AdminScreen(),
         '/addHotels': (context) => const AddHotelScreen(),
+        '/bottomNav': (context) => const BottomNavAdmin(),
       },
     );
   }
-}
-
-class AppTheme {
-  static var theme;
 }

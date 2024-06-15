@@ -1,8 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:muniafu_hotel/presentation/authentication/widgets/logo.dart';
 import 'package:provider/provider.dart';
 
-import '../../../providers/admin_provider.dart';
+import '../../../providers/admin.dart';
 
 class AdminScreen extends StatelessWidget {
   AdminScreen({super.key});
@@ -43,7 +45,10 @@ class AdminScreen extends StatelessWidget {
                     .read<AdminProvider>()
                     .signInWithEmailAndPassword(context, email, password);
                 // Check if the user is created successfully
-                Navigator.pushNamed(context, '/addHotels');
+                Navigator.pushNamed(
+                  context,
+                  '/bottomNav',
+                );
               },
               child: const Text('Login'),
             ),

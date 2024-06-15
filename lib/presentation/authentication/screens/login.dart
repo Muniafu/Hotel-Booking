@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:muniafu_hotel/presentation/authentication/widgets/logo.dart';
 import 'package:muniafu_hotel/presentation/home/widgets/bottom_nav.dart';
-import 'package:muniafu_hotel/providers/auth_provider.dart';
+import 'package:muniafu_hotel/providers/auth.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

@@ -1,5 +1,5 @@
 import '../domain/models/hotel.dart';
-import '../domain/models/room_model.dart';
+import '../domain/models/room.dart';
 
 List<Hotel> dummyHotels = [
   Hotel(

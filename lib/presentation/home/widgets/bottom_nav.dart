@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:muniafu_hotel/presentation/home/home_screen.dart';
-import 'package:muniafu_hotel/presentation/home/profile_screen.dart';
-import 'package:muniafu_hotel/presentation/search/search_screen.dart';
-import 'package:muniafu_hotel/providers/navigation_provider.dart';
+import 'package:muniafu_hotel/presentation/home/home.dart';
+import 'package:muniafu_hotel/presentation/home/profile.dart';
+import 'package:muniafu_hotel/presentation/search/search.dart';
+import 'package:muniafu_hotel/providers/navigation.dart';
 import 'package:provider/provider.dart';
 
-import '../../../providers/hotel_provider.dart';
-import '../add_hotels_screen.dart';
+import '../../../providers/hotel.dart';
 
 class BottomBar extends StatelessWidget {
   BottomBar({
     super.key,
   });
   final List<Widget> currentTab = [
-    const MyHomePage(title: 'Hotel Page'),
+    MyHomePage(title: 'Hotel Page'),
     const SearchScreen(),
     const ProfileScreen(),
-    const AddHotelScreen(),
   ];
 
   @override

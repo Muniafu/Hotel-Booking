@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:muniafu_hotel/presentation/authentication/widgets/logo.dart';
 import 'package:muniafu_hotel/presentation/home/widgets/bottom_nav.dart';
 import 'package:provider/provider.dart';
-import 'package:muniafu_hotel/providers/auth_provider.dart';
+import 'package:muniafu_hotel/providers/auth.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -17,7 +17,7 @@ class _CreateUserScreenState extends State<SignUpScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _displayNameController = TextEditingController();
-
+  final _phoneNumber = TextEditingController();
   @override
   void dispose() {
     _emailController.dispose();
@@ -54,10 +54,10 @@ class _CreateUserScreenState extends State<SignUpScreen> {
                         hintText: "Full Name",
                         labelText: 'Full Name',
                         prefixIcon: Icon(Icons.person,
-                            color: Color(0xff000000), size: 35),
+                            color: Color(0xff000000), size: 24),
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 16),
                     TextFormField(
                       controller: _emailController,
                       validator: (value) {
@@ -71,7 +71,24 @@ class _CreateUserScreenState extends State<SignUpScreen> {
                         hintText: "Email",
                         labelText: 'Email',
                         prefixIcon: Icon(Icons.mail,
-                            color: Color(0xff000000), size: 35),
+                            color: Color(0xff000000), size: 24),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _phoneNumber,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your Number';
+                        }
+
+                        return null;
+                      },
+                      decoration: const InputDecoration(
+                        hintText: "number",
+                        labelText: 'Phone Number',
+                        prefixIcon: Icon(Icons.phone,
+                            color: Color(0xff000000), size: 24),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -88,7 +105,7 @@ class _CreateUserScreenState extends State<SignUpScreen> {
                         hintText: "Password",
                         labelText: 'Password',
                         prefixIcon: Icon(Icons.visibility_off,
-                            color: Color(0xff000000), size: 35),
+                            color: Color(0xff000000), size: 24),
                       ),
                       obscureText: true,
                     ),
@@ -101,11 +118,12 @@ class _CreateUserScreenState extends State<SignUpScreen> {
                           String password = _passwordController.text.trim();
                           String displayName =
                               _displayNameController.text.trim();
+                          int phoneNumber = int.parse(_phoneNumber.text.trim());
                           // Pass the current context to the AuthProvider
                           await context
                               .read<AuthProvider>()
-                              .createUserWithEmailAndPassword(
-                                  context, email, password, displayName);
+                              .createUserWithEmailAndPassword(context, email,
+                                  password, displayName, phoneNumber);
                           // Check if the user is created successfully
                           if (context.read<AuthProvider>().user != null) {
                             Navigator.pushReplacement(
