@@ -16,6 +16,7 @@ To get started with the Hotel Management System, follow these steps:
 
 # Install dependencies:
     flutter:
+    
     sdk: flutter
 
         cupertino_icons: ^1.0.6
