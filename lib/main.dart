@@ -49,7 +49,7 @@ class Hotel extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Hotel Card',
+      title: 'Muniafu Hotel',
       theme: AppTheme.theme,
       home: authProvider.isLoggedIn ? BottomBar() : const SignUpScreen(),
       routes: {
