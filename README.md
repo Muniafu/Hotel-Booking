@@ -9,14 +9,14 @@ This project is a starting point for a Flutter application.
 To get started with the Hotel Management System, follow these steps:
 
 # Clone the repository:
-    git clone https://github.com/yourusername/hotel-management-system.git
+    git clone https://github.com/Muniafu/Hotel-Booking.git
 
 # Navigate to the project directory:
-    cd hotel-management-system
+    cd Hotel-Booking
 
 # Install dependencies:
     flutter:
-    
+
     sdk: flutter
 
         cupertino_icons: ^1.0.6
