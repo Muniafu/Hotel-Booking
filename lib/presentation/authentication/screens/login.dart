@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,10 +8,10 @@ import 'package:muniafu_hotel/providers/auth.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
   @override
-  State<LoginScreen> createState() => _CreateUserScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _CreateUserScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -30,48 +28,94 @@ class _CreateUserScreenState extends State<LoginScreen> {
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            const LogoWidget(),
-            TextFormField(
-              controller: _emailController,
-              decoration: const InputDecoration(
-                labelText: 'Email',
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(24.0),
+          child: Card(
+            elevation: 8,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Form(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const LogoWidget(),
+                    const SizedBox(height: 24),
+                    TextFormField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        prefixIcon: const Icon(Icons.email, color: Colors.black),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        prefixIcon:
+                            const Icon(Icons.lock, color: Colors.black),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                      obscureText: true,
+                    ),
+                    const SizedBox(height: 16),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/');
+                      },
+                      child: const Text('Don`t have an account?'),
+                    ),
+                    const SizedBox(height: 24),
+                    ElevatedButton(
+                      onPressed: () async {
+                        String email = _emailController.text.trim();
+                        String password = _passwordController.text.trim();
+
+                        await context
+                            .read<AuthProvider>()
+                            .signInWithEmailAndPassword(
+                                context, email, password);
+
+                        if (context.read<AuthProvider>().user != null) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => BottomBar()),
+                          );
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40.0, vertical: 15.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/admin');
+                      },
+                      child: const Text('Login as admin'),
+                    ),
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: 16),
-            TextFormField(
-              controller: _passwordController,
-              decoration: const InputDecoration(
-                labelText: 'Password',
-              ),
-              obscureText: true,
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                String email = _emailController.text.trim();
-                String password = _passwordController.text.trim();
-                // Pass the current context to the AuthProvider
-                await context
-                    .read<AuthProvider>()
-                    .signInWithEmailAndPassword(context, email, password);
-                // Check if the user is created successfully
-                if (context.read<AuthProvider>().user != null) {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => BottomBar()));
-                }
-              },
-              child: const Text('Login'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/admin');
-              },
-              child: const Text('Login as admin'),
-            ),
-          ],
+          ),
         ),
       ),
     );

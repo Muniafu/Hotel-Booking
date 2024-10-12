@@ -20,27 +20,34 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
   double rating = 0.0;
   List<Room> rooms = [];
 
+  // New room form variables
+  final _roomformKey = GlobalKey<FormState>();
+  final roomTypeController = TextEditingController();
+  final roomRateController = TextEditingController();
+  bool isRoomAvailable = true;
+
   @override
   void dispose() {
     nameController.dispose();
     locationController.dispose();
     imageUrlController.dispose();
+    roomTypeController.dispose();
+    roomRateController.dispose();
     super.dispose();
   }
 
-  // New room form variables
-  final _roomformKey = GlobalKey<FormState>();
-  final type = TextEditingController();
-  double roomRate = 0.0;
-  bool isRoomAvailable = true;
   void addNewRoom() {
     if (_roomformKey.currentState!.validate()) {
       _roomformKey.currentState!.save();
       setState(() {
-        rooms.add(Room(type: '', rate: roomRate, isAvailable: isRoomAvailable));
+        rooms.add(Room(
+          type: roomTypeController.text,
+          rate: double.parse(roomRateController.text),
+          isAvailable: isRoomAvailable,
+        ));
         // Clear new room form fields
-        type.text = "";
-        roomRate = 0.0;
+        roomTypeController.clear();
+        roomRateController.clear();
         isRoomAvailable = true;
       });
     }
@@ -51,7 +58,7 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Upload'),
+        title: const Text('Upload Hotel'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
@@ -59,22 +66,21 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
           key: _formKey,
           child: Column(
             children: [
-              // Text field for name
+              // Text field for hotel name
               TextFormField(
                 decoration: const InputDecoration(
-                  labelText: 'Name',
+                  labelText: 'Hotel Name',
                 ),
                 controller: nameController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter a name';
+                    return 'Please enter a hotel name';
                   }
                   return null;
                 },
               ),
-              const SizedBox(
-                height: 20.0,
-              ),
+              const SizedBox(height: 20.0),
+
               // Text field for location
               TextFormField(
                 decoration: const InputDecoration(
@@ -88,9 +94,7 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
                   return null;
                 },
               ),
-              const SizedBox(
-                height: 20.0,
-              ),
+              const SizedBox(height: 20.0),
 
               // Slider for rating
               Slider(
@@ -103,9 +107,7 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
                   setState(() => rating = newRating);
                 },
               ),
-              const SizedBox(
-                height: 20.0,
-              ),
+              const SizedBox(height: 20.0),
 
               // Text field for image URL
               TextFormField(
@@ -120,10 +122,9 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
                   return null;
                 },
               ),
-              const SizedBox(
-                height: 10.0,
-              ),
+              const SizedBox(height: 20.0),
 
+              // Add Room Button
               ElevatedButton(
                 onPressed: () => showDialog(
                   context: context,
@@ -133,13 +134,13 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
                       content: Form(
                         key: _roomformKey,
                         child: Column(
-                          mainAxisSize: MainAxisSize.min, // Avoid overflow
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             TextFormField(
                               decoration: const InputDecoration(
                                 labelText: 'Room Type',
                               ),
-                              controller: type,
+                              controller: roomTypeController,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter room type';
@@ -147,31 +148,24 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
                                 return null;
                               },
                             ),
-                            const SizedBox(
-                              height: 30.0,
-                            ),
+                            const SizedBox(height: 20.0),
                             TextFormField(
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 labelText: 'Rate',
-                                hintText: roomRate.toString(),
+                                hintText: 'Enter room rate',
                               ),
+                              controller: roomRateController,
                               keyboardType: TextInputType.number,
-                              controller: TextEditingController(
-                                  text: roomRate.toString()),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter room rate';
                                 }
                                 return null;
                               },
-                              onSaved: (newValue) =>
-                                  roomRate = double.parse(newValue!),
                             ),
-                            const SizedBox(
-                              height: 30.0,
-                            ),
+                            const SizedBox(height: 20.0),
                             SwitchListTile(
-                              title: const Text('Available'),
+                              title: const Text('Room Availability'),
                               value: isRoomAvailable,
                               onChanged: (value) =>
                                   setState(() => isRoomAvailable = value),
@@ -195,7 +189,8 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
                 child: const Text('Add Room'),
               ),
 
-              const Text('Rooms:'),
+              const SizedBox(height: 10.0),
+              const Text('Added Rooms:'),
               ListView.builder(
                 shrinkWrap: true,
                 itemCount: rooms.length,
@@ -203,38 +198,39 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
                   return ListTile(
                     title: Text(rooms[index].type),
                     subtitle: Text('Rate: ${rooms[index].rate}'),
-                    trailing: Text(rooms[index].isAvailable
-                        ? 'Available'
-                        : 'Not Available'),
+                    trailing: Text(
+                      rooms[index].isAvailable ? 'Available' : 'Not Available',
+                    ),
                   );
                 },
               ),
 
-              // Submit button
+              // Submit Button
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    // Access data from controllers
                     String name = nameController.text;
                     String location = locationController.text;
                     String imageUrl = imageUrlController.text;
-                    // Create a new hotel object
+
                     Hotel hotel = Hotel(
-                        name: name,
-                        location: location,
-                        imageUrl: imageUrl,
-                        rating: rating,
-                        rooms: rooms);
-                    // Access the provider
+                      name: name,
+                      location: location,
+                      imageUrl: imageUrl,
+                      rating: rating,
+                      rooms: rooms,
+                    );
+
                     context.read<HotelProvider>().addHotel(hotel);
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                MyHomePage(title: 'Hotel Page')));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyHomePage(title: 'Hotel Page'),
+                      ),
+                    );
                   }
                 },
-                child: const Text('Submit'),
+                child: const Text('Submit Hotel'),
               ),
             ],
           ),

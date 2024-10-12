@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:muniafu_hotel/presentation/home/hotel_rooms.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../domain/models/user.dart';
@@ -7,7 +6,6 @@ import '../../providers/hotel.dart';
 
 class MyHomePage extends StatelessWidget {
   final pageController = PageController();
-
   final String title;
   final UserModel? user;
 
@@ -18,443 +16,268 @@ class MyHomePage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => HotelProvider()..fetchHotels(),
       child: Scaffold(
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 40, 16, 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Container(
-                    height: 45,
-                    width: 45,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: Image.network(
-                        "https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper-thumbnail.png",
-                        fit: BoxFit.cover),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-                      child: Text(
-                        'Welcome ${user?.displayName ?? ' '}',
-                        textAlign: TextAlign.start,
-                        maxLines: 2,
-                        overflow: TextOverflow.clip,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                          fontSize: 14,
-                          color: Color(0xff000000),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
-                    child: Icon(
-                      Icons.search_off_rounded,
-                      color: Color(0xff212435),
-                      size: 24,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
-              padding: const EdgeInsets.all(0),
-              width: MediaQuery.of(context).size.width,
-              height: 100,
-              decoration: const BoxDecoration(
-                color: Color(0xffffffff),
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.zero,
-              ),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
+        backgroundColor: const Color(0xfff5f5f5),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Top Section: Brand name and Search bar
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 40, 16, 16),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 0, horizontal: 8),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.all(0),
-                            padding: const EdgeInsets.all(8),
-                            width: 60,
-                            height: 60,
-                            decoration: const BoxDecoration(
-                              color: Color(0xFFAF0F0F),
-                              shape: BoxShape.circle,
-                            ),
-                            child: const ImageIcon(
-                              NetworkImage(
-                                  "https://cdn1.iconfinder.com/data/icons/basi-icon-set-01/100/Fin_copy-37-256.png"),
-                              size: 24,
-                              color: Color(0xFF110DCE),
-                            ),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                            child: Text(
-                              "Cities",
-                              textAlign: TextAlign.start,
-                              overflow: TextOverflow.clip,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontStyle: FontStyle.normal,
-                                fontSize: 12,
-                                color: Color(0xff000000),
-                              ),
-                            ),
-                          ),
-                        ],
+                    const Text(
+                      'Muniafu Bookings',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Color(0xff3a57e8),
                       ),
                     ),
-                    ListView(
-                      scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.all(0),
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Container(
-                                height: 60,
-                                width: 60,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Image.network(
-                                    "https://media.istockphoto.com/id/1299026534/photo/nairobi-kenya.jpg?s=612x612&w=0&k=20&c=xwCQ441cTHFBTZpb8ihvVwqqtTZjmees1C3xdJc_nfw=",
-                                    fit: BoxFit.cover),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                                child: Text(
-                                  "Nairobi",
-                                  textAlign: TextAlign.start,
-                                  overflow: TextOverflow.clip,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontStyle: FontStyle.normal,
-                                    fontSize: 12,
-                                    color: Color(0xff000000),
-                                  ),
-                                ),
-                              ),
-                            ],
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 16.0),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Icons.search_rounded),
+                            hintText: 'Search...',
+                            contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none,
+                            ),
+                            filled: true,
+                            fillColor: Colors.grey[200],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Container(
-                                height: 60,
-                                width: 60,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Image.network(
-                                    "https://media.istockphoto.com/id/1299026534/photo/nairobi-kenya.jpg?s=612x612&w=0&k=20&c=xwCQ441cTHFBTZpb8ihvVwqqtTZjmees1C3xdJc_nfw=",
-                                    fit: BoxFit.cover),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                                child: Text(
-                                  "Kisumu",
-                                  textAlign: TextAlign.start,
-                                  overflow: TextOverflow.clip,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontStyle: FontStyle.normal,
-                                    fontSize: 12,
-                                    color: Color(0xff000000),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Container(
-                                height: 60,
-                                width: 60,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Image.network(
-                                    "https://media.istockphoto.com/id/1299026534/photo/nairobi-kenya.jpg?s=612x612&w=0&k=20&c=xwCQ441cTHFBTZpb8ihvVwqqtTZjmees1C3xdJc_nfw=",
-                                    fit: BoxFit.cover),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                                child: Text(
-                                  "Mombasa",
-                                  textAlign: TextAlign.start,
-                                  overflow: TextOverflow.clip,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontStyle: FontStyle.normal,
-                                    fontSize: 12,
-                                    color: Color(0xff000000),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Container(
-                                height: 60,
-                                width: 60,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Image.network(
-                                    "https://media.istockphoto.com/id/1299026534/photo/nairobi-kenya.jpg?s=612x612&w=0&k=20&c=xwCQ441cTHFBTZpb8ihvVwqqtTZjmees1C3xdJc_nfw=",
-                                    fit: BoxFit.cover),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                                child: Text(
-                                  "Nyali",
-                                  textAlign: TextAlign.start,
-                                  overflow: TextOverflow.clip,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontStyle: FontStyle.normal,
-                                    fontSize: 12,
-                                    color: Color(0xff000000),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 0, horizontal: 16),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Container(
-                                height: 60,
-                                width: 60,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Image.network(
-                                    "https://media.istockphoto.com/id/1299026534/photo/nairobi-kenya.jpg?s=612x612&w=0&k=20&c=xwCQ441cTHFBTZpb8ihvVwqqtTZjmees1C3xdJc_nfw=",
-                                    fit: BoxFit.cover),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                                child: Text(
-                                  "Text",
-                                  textAlign: TextAlign.start,
-                                  overflow: TextOverflow.clip,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontStyle: FontStyle.normal,
-                                    fontSize: 14,
-                                    color: Color(0xff000000),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ],
                 ),
               ),
-            ),
-            SizedBox(
-              height: 240,
-              width: MediaQuery.of(context).size.width,
-              child: Stack(
-                children: [
-                  PageView.builder(
-                    controller: pageController,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 3,
-                    itemBuilder: (context, position) {
-                      List<String> imageUrls = [
-                        "https://media.istockphoto.com/id/1193996236/photo/scenic-of-night-urban-cityscape-skyline-and-golden-building-with-twilight-time.jpg?s=2048x2048&w=is&k=20&c=98Eh08jrwH9DQNxx1V7gUOjeEQoJXuX8T7AmVmFy90M=",
-                        "https://media.istockphoto.com/id/1193996236/photo/scenic-of-night-urban-cityscape-skyline-and-golden-building-with-twilight-time.jpg?s=2048x2048&w=is&k=20&c=98Eh08jrwH9DQNxx1V7gUOjeEQoJXuX8T7AmVmFy90M=",
-                        "https://media.istockphoto.com/id/1193996236/photo/scenic-of-night-urban-cityscape-skyline-and-golden-building-with-twilight-time.jpg?s=2048x2048&w=is&k=20&c=98Eh08jrwH9DQNxx1V7gUOjeEQoJXuX8T7AmVmFy90M=",
-                      ];
-                      return Align(
-                        alignment: Alignment.topCenter,
-                        child: Image.network(
-                          imageUrls[
-                              position], // Use the URL at the current position
-                          height: 200,
-                          width: MediaQuery.of(context).size.width,
-                          fit: BoxFit.cover,
-                        ),
-                      );
-                    },
+              // Middle Section: Promotional Banner
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+                child: Text(
+                  'Current Offers & Promotions',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: Colors.black87,
                   ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-                      child: SmoothPageIndicator(
-                        controller: pageController,
-                        count: 3,
-                        axisDirection: Axis.horizontal,
-                        effect: const ExpandingDotsEffect(
-                          dotColor: Color(0xff9e9e9e),
-                          activeDotColor: Color(0xff3a57e8),
-                          dotHeight: 10,
-                          dotWidth: 10,
-                          radius: 16,
-                          spacing: 8,
-                          expansionFactor: 3,
+                ),
+              ),
+              SizedBox(
+                height: 240,
+                child: Stack(
+                  children: [
+                    PageView.builder(
+                      controller: pageController,
+                      itemCount: 3,
+                      itemBuilder: (context, position) {
+                        List<String> imageUrls = [
+                          "https://tinyurl.com/2p8xv3j4",
+                          "https://tinyurl.com/2p8xv3j4",
+                          "https://tinyurl.com/2p8xv3j4",
+                        ];
+                        return GestureDetector(
+                          onTap: () {},
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(16),
+                              child: Image.network(
+                                imageUrls[position],
+                                height: 200,
+                                width: MediaQuery.of(context).size.width,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                        child: SmoothPageIndicator(
+                          controller: pageController,
+                          count: 3,
+                          effect: const ExpandingDotsEffect(
+                            dotColor: Colors.grey,
+                            activeDotColor: Color(0xff3a57e8),
+                            dotHeight: 12,
+                            dotWidth: 12,
+                            spacing: 8,
+                            expansionFactor: 3,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 16.0),
-            Expanded(
-              child: Consumer<HotelProvider>(
-                builder: (context, provider, child) {
-                  if (provider.hotels.isEmpty) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  return GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 8.0,
-                      mainAxisSpacing: 8.0,
+              // Displaying hotels, flights, vacation rentals, experiences
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _buildOptionCard('Hotels', Icons.hotel, Colors.blue),
+                    _buildOptionCard('Flights', Icons.flight, Colors.red),
+                    _buildOptionCard('Rentals', Icons.home, Colors.green),
+                    _buildOptionCard('Experiences', Icons.explore, Colors.purple),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              // Lower Section: User Testimonials, Newsletter Sign-Up, Blog/Guides
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'What Our Users Say',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.black87,
+                      ),
                     ),
-                    padding: const EdgeInsets.all(16.0),
-                    itemCount: provider.hotels.length,
-                    itemBuilder: (context, index) {
-                      final hotel = provider.hotels[index];
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  HotelRoomsScreen(hotel: hotel),
-                            ),
-                          );
-                        },
-                        child: Card(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Expanded(
-                                child: Image.network(
-                                  hotel.imageUrl,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      hotel.name,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16.0,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 4.0),
-                                    Text(
-                                      hotel.location,
-                                      style: const TextStyle(
-                                        fontSize: 14.0,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 8.0),
-                                    Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
-                                        ),
-                                        const SizedBox(width: 4.0),
-                                        Text(
-                                          hotel.rating.toString(),
-                                          style: const TextStyle(
-                                            fontSize: 14.0,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                },
+                    const SizedBox(height: 10),
+                    _buildTestimonialCard(
+                      'John Doe',
+                      'https://cdn-icons-png.flaticon.com/512/149/149071.png',
+                      'This platform made my travel experience seamless!',
+                    ),
+                    const SizedBox(height: 20),
+                    _buildNewsletterSignUp(),
+                    const SizedBox(height: 20),
+                    const Text(
+                      'Travel Blog & Guides',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    _buildBlogCard('10 Tips for Budget Travel', 'https://tinyurl.com/2p8xv3j4'),
+                    _buildBlogCard('Top 5 Beaches in Kenya', 'https://tinyurl.com/2p8xv3j4'),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOptionCard(String title, IconData icon, Color color) {
+    return Column(
+      children: [
+        CircleAvatar(
+          radius: 30,
+          backgroundColor: color.withOpacity(0.1),
+          child: Icon(icon, color: color, size: 28),
+        ),
+        const SizedBox(height: 8),
+        Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+      ],
+    );
+  }
+
+  Widget _buildTestimonialCard(String name, String avatarUrl, String feedback) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 30,
+              backgroundImage: NetworkImage(avatarUrl),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 8),
+                  Text(feedback),
+                ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildNewsletterSignUp() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Sign up for our Newsletter',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        ),
+        const SizedBox(height: 10),
+        Row(
+          children: [
+            Expanded(
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Enter your email',
+                  contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 12),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide.none,
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+              ),
+              child: const Text('Subscribe'),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBlogCard(String title, String imageUrl) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.horizontal(left: Radius.circular(12)),
+            child: Image.network(imageUrl, width: 100, height: 80, fit: BoxFit.cover),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+            ),
+          ),
+        ],
       ),
     );
   }

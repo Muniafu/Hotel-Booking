@@ -1,8 +1,5 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:muniafu_hotel/presentation/authentication/widgets/logo.dart';
-import 'package:muniafu_hotel/presentation/home/widgets/bottom_nav.dart';
 import 'package:provider/provider.dart';
 import 'package:muniafu_hotel/providers/auth.dart';
 
@@ -18,6 +15,7 @@ class _CreateUserScreenState extends State<SignUpScreen> {
   final _passwordController = TextEditingController();
   final _displayNameController = TextEditingController();
   final _phoneNumber = TextEditingController();
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -32,16 +30,23 @@ class _CreateUserScreenState extends State<SignUpScreen> {
       appBar: AppBar(
         title: const Text('Sign Up'),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20.0),
+          child: Card(
+            elevation: 8,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
               child: Form(
                 key: _formKey,
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     const LogoWidget(),
+                    const SizedBox(height: 24),
                     TextFormField(
                       controller: _displayNameController,
                       validator: (value) {
@@ -50,11 +55,14 @@ class _CreateUserScreenState extends State<SignUpScreen> {
                         }
                         return null;
                       },
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         hintText: "Full Name",
                         labelText: 'Full Name',
-                        prefixIcon: Icon(Icons.person,
+                        prefixIcon: const Icon(Icons.person,
                             color: Color(0xff000000), size: 24),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -64,14 +72,16 @@ class _CreateUserScreenState extends State<SignUpScreen> {
                         if (value == null || value.isEmpty) {
                           return 'Please enter your email';
                         }
-
                         return null;
                       },
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         hintText: "Email",
                         labelText: 'Email',
-                        prefixIcon: Icon(Icons.mail,
+                        prefixIcon: const Icon(Icons.mail,
                             color: Color(0xff000000), size: 24),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -79,16 +89,18 @@ class _CreateUserScreenState extends State<SignUpScreen> {
                       controller: _phoneNumber,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your Number';
+                          return 'Please enter your phone number';
                         }
-
                         return null;
                       },
-                      decoration: const InputDecoration(
-                        hintText: "number",
+                      decoration: InputDecoration(
+                        hintText: "Phone Number",
                         labelText: 'Phone Number',
-                        prefixIcon: Icon(Icons.phone,
+                        prefixIcon: const Icon(Icons.phone,
                             color: Color(0xff000000), size: 24),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -98,17 +110,20 @@ class _CreateUserScreenState extends State<SignUpScreen> {
                         if (value == null || value.isEmpty) {
                           return 'Please enter your password';
                         }
-                        // Add more complex validation if needed
                         return null;
                       },
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         hintText: "Password",
                         labelText: 'Password',
-                        prefixIcon: Icon(Icons.visibility_off,
+                        prefixIcon: const Icon(Icons.visibility_off,
                             color: Color(0xff000000), size: 24),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
                       ),
                       obscureText: true,
                     ),
+                    const SizedBox(height: 24),
                     ElevatedButton(
                       onPressed: () async {
                         if (!_formKey.currentState!.validate()) {
@@ -116,37 +131,43 @@ class _CreateUserScreenState extends State<SignUpScreen> {
                         } else {
                           String email = _emailController.text.trim();
                           String password = _passwordController.text.trim();
-                          String displayName =
-                              _displayNameController.text.trim();
+                          String displayName = _displayNameController.text.trim();
                           int phoneNumber = int.parse(_phoneNumber.text.trim());
-                          // Pass the current context to the AuthProvider
-                          await context
-                              .read<AuthProvider>()
-                              .createUserWithEmailAndPassword(context, email,
-                                  password, displayName, phoneNumber);
-                          // Check if the user is created successfully
+
+                          await context.read<AuthProvider>().createUserWithEmailAndPassword(
+                              context, email, password, displayName, phoneNumber);
+
                           if (context.read<AuthProvider>().user != null) {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => BottomBar()));
+                            Navigator.pushReplacementNamed(
+                              context, '/login'
+                              );
                           }
                         }
                       },
-                      child: const Text('Sign Up'),
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40.0, vertical: 15.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                      child: const Text(
+                        'Sign Up',
+                        style: TextStyle(fontSize: 16),
+                      ),
                     ),
-                    //add a button to navigate to the login screen
+                    const SizedBox(height: 16),
                     TextButton(
                       onPressed: () {
                         Navigator.pushReplacementNamed(context, '/login');
                       },
-                      child: const Text('Already have an account? Login'),
+                      child: const Text('Already have an account?'),
                     ),
                   ],
                 ),
               ),
             ),
-          ],
+          ),
         ),
       ),
     );

@@ -18,8 +18,9 @@ class AuthService {
       String displayName,
       int phoneNumber) async {
     try {
+      var auth = _auth;
       UserCredential userCredential =
-          await _auth.createUserWithEmailAndPassword(
+          await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );

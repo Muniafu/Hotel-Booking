@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static const Color primaryColor = Color(0xFF1E91B6);
-  static const Color secondaryColor = Colors.green;
+  static const Color primaryColor = Color(0xFF6F42C1);
+  static const Color secondaryColor = Color(0xFF20C997);
 
   static const TextStyle headline1 = TextStyle(
     fontSize: 24,
@@ -36,7 +36,7 @@ class AppTheme {
       borderRadius: BorderRadius.circular(10),
     ),
     foregroundColor: Colors.white, // Text color
-    backgroundColor: const Color(0xFF5435FF), // Background color
+    backgroundColor: const Color(0xFF343A40), // Background color
     side: const BorderSide(color: Colors.transparent), // Border color
   );
 
@@ -61,14 +61,14 @@ class AppTheme {
         ),
         textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all(primaryColor),
+            foregroundColor: WidgetStateProperty.all(primaryColor),
           ),
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all(primaryColor),
+            foregroundColor: WidgetStateProperty.all(primaryColor),
             overlayColor:
-                MaterialStateProperty.all(primaryColor.withOpacity(0.1)),
+                WidgetStateProperty.all(primaryColor.withOpacity(0.1)),
           ),
         ),
         cardTheme: CardTheme(
